@@ -16,7 +16,7 @@ window.onload = () => {
     const notificationELEM = document.querySelector("#notification");
     const highlight = document.querySelector("#highlight");
     const fileInput = document.querySelector("#filePicker");
-    const limitInputLabel = document.querySelector("#limitPickerLabel");
+    const limitInputLabel = document.querySelector("#limitPickerLabel span");
     const limitInput = document.querySelector("#limitPicker");
     const methodInput = document.querySelector("#methodPicker");
 
@@ -55,7 +55,7 @@ window.onload = () => {
             SALBP2_BTN.classList.remove("active");
             SALBP2_BTN.classList.add("notActive");
 
-            limitInputLabel.innerHTML = "c" + limitInputLabel.innerHTML.substring(0 + 1);
+            limitInputLabel.innerText = "c" + limitInputLabel.innerText.substring(0 + 1);
             typeSALBP = 1;
             notificationUpdate('SALBP-1 selected!', 1500);
         } else {
@@ -72,7 +72,7 @@ window.onload = () => {
             SALBP1_BTN.classList.remove("active");
             SALBP1_BTN.classList.add("notActive");
 
-            limitInputLabel.innerHTML = "m" + limitInputLabel.innerHTML.substring(0 + 1);
+            limitInputLabel.innerText = "m" + limitInputLabel.innerText.substring(0 + 1);
             typeSALBP = 2;
             notificationUpdate('SALBP-2 selected!', 1500);
         } else {
@@ -600,18 +600,25 @@ window.onload = () => {
 
     //! BLM problem solver function
     function BLMsolver() {
-        if (limitInput.value < 0) {
+        if (limitInput.value < 0 && typeSALBP == 1) {
             errorHandler();
             notificationUpdate('Incorrect c value (not positive)', 1500);
             throw new Error("Incorrect c value (not positive)");
+        } else if (limitInput.value < 0 && typeSALBP == 2) {
+            errorHandler();
+            notificationUpdate('Incorrect m value (not positive)', 1500);
+            throw new Error("Incorrect m value (not positive)");
         }
 
-        if (limitInput.value == 0) {
+        if (limitInput.value == 0 && typeSALBP == 1) {
             errorHandler();
             notificationUpdate('Incorrect c value (null)', 1500);
             throw new Error("Incorrect c value (null)");
+        } else if (limitInput.value == 0 && typeSALBP == 2) {
+            errorHandler();
+            notificationUpdate('Incorrect m value (null)', 1500);
+            throw new Error("Incorrect m value (null)");
         }
-
 
         switch (methodInput.selectedIndex) {
             case 0:
@@ -628,7 +635,11 @@ window.onload = () => {
                 break;
         }
 
-        lineupSolver();
+        if (typeSALBP == 1) {
+            lineupSolver();
+        } else if (typeSALBP == 2) {
+            console.log("Lineup for SALBP-2");
+        }
         //generateGanttCharts();
         calculateQualityIndicators();
 
