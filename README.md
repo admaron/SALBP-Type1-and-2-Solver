@@ -1,15 +1,17 @@
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" /> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" /> <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" />
 
-# Visualization of a precedence graph for the Simple Assembly Line Balancing Problem
+# Web application solving Simple Assembly Line Balancing Problem (SALBP) Type 1 and Type 2
 
 
 ## Introduction
-The main goal of the project is to create a visualization of a precedence graph for the Simple Assembly Line Balancing Problem (ALBP) based on data from a TXT file or user input. Main functionalities implemented in this project are:
+The main goal of the project is to develop a web application to solve Simple Assembly Line Balancing Problem (SALBP) Type 1 and Type 2. Main functionalities implemented in this project are:
+- Implementation of heuristics such as WET, RPW, NOF and NOiF,
+- Quality assessment using 3 indicators such as smoothness coefficient, efficiency coefficient and line time,
+- Complete Gantt chart and precedence graph visualization,
 - TXT file data read,
 - User data entry,
 - Basic data validation with error line highlights,
-- Action status notifications, 
-- Complete graph visualization.
+- Action status notifications.
 
 ### Technologies
 Technologies and resources used in the project:
@@ -19,7 +21,8 @@ Technologies and resources used in the project:
 * JavaScript,
 * Google Fonts,
 * Font Awesome Icons,
-* [LeaderLine](https://github.com/anseki/leader-line).
+* [LeaderLine](https://github.com/anseki/leader-line),
+* [Chart.js](https://github.com/chartjs/Chart.js).
 
 
 ## Getting Started
