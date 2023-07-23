@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Adam Geppert">
+    <meta name="description" content="Aplikacja internetowa stworzona w ramach pracy inżynierskiej w roku 2024">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+
+    <title>ALBP Graph Visualization</title>
+</head>
+
+<body>
+    <header>
+        <svg width="30" height="18" viewBox="0 0 30 18" fill="none" xmlns="http://www.w3.org/2000/svg" id="sourceBTN"
+            class="hide">
+            <line y1="1.25" x2="15" y2="1.25" stroke="#3568cc" stroke-width="3" />
+            <line y1="9.25" x2="30" y2="9.25" stroke="#3568cc" stroke-width="3" />
+            <line x1="15" y1="17.25" x2="30" y2="17.25" stroke="#3568cc" stroke-width="3" />
+        </svg>
+    </header>
+
+    <div id="notification">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <path
+                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+        </svg>
+        <p>Data copied to clipboard!</p>
+    </div>
+
+    <div id="highlight"></div>
+
+    <div id="sourceWrapper">
+        <h1>Choose a TXT file or enter data manually</h1>
+        <form>
+            <input type="file" id="filePicker" accept=".txt" required>
+            <textarea id="source" placeholder='1 1 "succs" [2, 3],&#10;2 1 "preds" [1]' spellcheck="false"></textarea>
+            <div>
+                <label for="cPicker">c =
+                    <input type="number" id="cPicker" value="15" min="1" required>
+                </label>
+                <select name="methodPicker" id="methodPicker" required>
+                    <option value="WET">WET</option>
+                    <option value="RPW">RPW</option>
+                    <option value="NOF">NOF</option>
+                    <option value="NOIF">NOIF</option>
+                </select>
+            </div>
+        </form>
+        <div>
+            <button id="copyBTN">Copy data</button>
+            <button id="updateBTN">Update Graph</button>
+        </div>
+    </div>
+
+    <div id="visualizationWrapper">
+    </div>
+
+    <!--<div id="ganttChartsWrapper">
+        <p id="methodDisplay"> solution for c = </p>
+        <hr>
+        <canvas id="ganttChartsCanvas"></canvas>
+    </div>-->
+
+    <script src="leader-line.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</body>
+
+</html>
