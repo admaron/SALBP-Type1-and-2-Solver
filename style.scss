@@ -53,6 +53,11 @@ html {
     background-color: #191919;
 }
 
+body {
+    max-width: 1920px;
+    margin: auto;
+}
+
 .hide {
     opacity: 0;
     pointer-events: none;
@@ -110,7 +115,7 @@ header {
 }
 
 #sourceWrapper {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
@@ -235,9 +240,6 @@ header {
 }
 
 #visualizationWrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100vh;
     max-height: 100vh;
@@ -287,14 +289,69 @@ header {
     }
 }
 
-#ganttChartsWrapper {
-    padding: 100px;
+#solutionWrapper {
+    margin: 100px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: $main-color;
 
-    #methodDisplay {
+    * {
+        transition: none;
+    }
+
+    #solutionType {
+        flex-basis: 55%;
+        background-color: $main-color;
         color: #fff;
         font-size: 35px;
-        margin-bottom: 30px;
         font-weight: 300;
+        padding: 25px 25px 25px 50px;
+
+        span {
+            font-weight: 700;
+        }
+    }
+
+    #solutionInfoC,
+    #solutionInfoHeuristic,
+    #solutionInfoK {
+        flex-basis: 15%;
+        background-color: $secondary-color;
+        color: #fff;
+        font-size: 35px;
+        font-weight: 500;
+        padding: 25px;
+        text-align: center;
+        border-left: 2px solid $main-color;
+    }
+
+    #solutionInfoLE,
+    #solutionInfoSI,
+    #solutionInfoT {
+        flex-basis: 30%;
+        flex-grow: 1;
+        background-color: $main-color;
+        color: #fff;
+        font-size: 35px;
+        font-weight: 500;
+        padding: 25px;
+        text-align: center;
+        border-left: 2px solid $secondary-color;
+    }
+
+    #ganttChartsWrapper {
+        width: 100%;
+        padding: 25px 0;
+        background-color: #fff;
+
+        canvas {
+            background-color: #fff;
+            padding: 50px 100px;
+            max-height: 50vh;
+        }
     }
 }
 

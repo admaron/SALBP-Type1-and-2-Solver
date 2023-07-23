@@ -19,6 +19,14 @@ window.onload = () => {
     const limitInputLabel = document.querySelector("#limitPickerLabel span");
     const limitInput = document.querySelector("#limitPicker");
     const methodInput = document.querySelector("#methodPicker");
+    const ganttChartsWrapper = document.querySelector("#ganttChartsWrapper");
+    const solutionType = document.querySelector("#solutionType");
+    const solutionInfoC = document.querySelector("#solutionInfoC");
+    const solutionInfoHeuristic = document.querySelector("#solutionInfoHeuristic");
+    const solutionInfoK = document.querySelector("#solutionInfoK");
+    const solutionInfoLE = document.querySelector("#solutionInfoLE");
+    const solutionInfoSI = document.querySelector("#solutionInfoSI");
+    const solutionInfoT = document.querySelector("#solutionInfoT");
 
     let Data = []; // Array of input data (objects) created by createDataObject()
     let Lines = []; // Array of line data (objects) created by createLineObject()
@@ -72,7 +80,7 @@ window.onload = () => {
             SALBP1_BTN.classList.remove("active");
             SALBP1_BTN.classList.add("notActive");
 
-            limitInputLabel.innerText = "m" + limitInputLabel.innerText.substring(0 + 1);
+            limitInputLabel.innerText = "K" + limitInputLabel.innerText.substring(0 + 1);
             typeSALBP = 2;
             notificationUpdate('SALBP-2 selected!', 1500);
         } else {
@@ -142,10 +150,14 @@ window.onload = () => {
         }
 
         appendNodeTime();
-        notificationUpdate('Visualization updated!', 1500);
 
+        ganttChartsWrapper.innerHTML = "";
+        solutionData = [];
+        cyclesLineup = [];
+        cyclesLineupTimes = [0];
         BLMsolver();
 
+        notificationUpdate('Solution found!', 1500);
         sourceWRAP.classList.add("hide");
     })
 
@@ -606,8 +618,8 @@ window.onload = () => {
             throw new Error("Incorrect c value (not positive)");
         } else if (limitInput.value < 0 && typeSALBP == 2) {
             errorHandler();
-            notificationUpdate('Incorrect m value (not positive)', 1500);
-            throw new Error("Incorrect m value (not positive)");
+            notificationUpdate('Incorrect K value (not positive)', 1500);
+            throw new Error("Incorrect K value (not positive)");
         }
 
         if (limitInput.value == 0 && typeSALBP == 1) {
@@ -616,8 +628,8 @@ window.onload = () => {
             throw new Error("Incorrect c value (null)");
         } else if (limitInput.value == 0 && typeSALBP == 2) {
             errorHandler();
-            notificationUpdate('Incorrect m value (null)', 1500);
-            throw new Error("Incorrect m value (null)");
+            notificationUpdate('Incorrect K value (null)', 1500);
+            throw new Error("Incorrect K value (null)");
         }
 
         switch (methodInput.selectedIndex) {
@@ -640,9 +652,15 @@ window.onload = () => {
         } else if (typeSALBP == 2) {
             console.log("Lineup for SALBP-2");
         }
-        //generateGanttCharts();
+        generateGanttCharts();
         calculateQualityIndicators();
 
+        solutionType.innerHTML = "<span>SALBP-" + typeSALBP + "</span> SOLUTION";
+        solutionInfoHeuristic.innerText = methodInput.options[methodInput.selectedIndex].text;
+        if (typeSALBP == 1) {
+            solutionInfoC.innerText = "c = " + limitInput.value;
+            solutionInfoK.innerText = "K = " + cyclesLineup.length;
+        }
 
         //! WET method prioritization solver function
         function WETsolver() {
@@ -879,45 +897,118 @@ window.onload = () => {
 
         //! Gantt charts generating function
         function generateGanttCharts() {
-            new Chart(
-                document.getElementById('ganttChartsCanvas'), {
-                    type: 'bar',
-                    options: {
-                        indexAxis: 'y',
-                        scales: {
-                            x: {
-                                stacked: true
+
+            for (i = 0; i < cyclesLineup.length; i++) {
+                let currentCanvas = document.createElement("canvas");
+                ganttChartsWrapper.appendChild(currentCanvas);
+
+                let currentChart = new Chart(
+                    currentCanvas, {
+                        type: 'bar',
+                        options: {
+                            indexAxis: 'y',
+                            scales: {
+                                x: {
+                                    stacked: true,
+                                    max: parseInt(limitInput.value),
+                                    grid: {
+                                        color: "#e0e0e0"
+                                    },
+                                    ticks: {
+                                        color: "#000",
+                                        font: {
+                                            size: 18,
+                                            family: "Poppins"
+                                        }
+                                    },
+                                    border: {
+                                        color: "#000"
+                                    }
+                                },
+                                y: {
+                                    stacked: true,
+                                    grid: {
+                                        display: false
+                                    },
+                                    ticks: {
+                                        color: "#000",
+                                        font: {
+                                            size: 30,
+                                            family: "Poppins",
+                                            weight: 500
+                                        }
+                                    },
+                                    border: {
+                                        color: "#000"
+                                    }
+                                }
                             },
-                            y: {
-                                stacked: true
-                            }
+                            plugins: {
+                                legend: {
+                                    position: "bottom",
+                                    labels: {
+                                        font: {
+                                            size: 20,
+                                            family: "Poppins",
+                                            weight: 600
+                                        },
+                                        color: "#000",
+                                    }
+                                },
+                                tooltip: {
+                                    padding: 15,
+                                    xAlign: "right",
+                                    yAlign: "center",
+                                    bodyFont: {
+                                        size: 16,
+                                        family: "Poppins",
+                                        weight: 600
+                                    },
+                                    callbacks: {
+                                        title: () => null,
+                                        label: function (context) {
+                                            return " Task time: " + context.dataset.data;
+                                        }
+                                    }
+                                }
+                            },
                         },
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                    },
 
-                    data: {
-                        labels: ["2015", "2014", "2013", "2012", "2011"],
+                        data: {
+                            labels: ["Cycle " + (i + 1) + " "],
 
-                        datasets: [{
-                            data: [727, 589, 537, 543, 574],
-                            backgroundColor: "rgba(63,103,126,1)",
-                            hoverBackgroundColor: "rgba(50,90,100,1)"
-                        }, {
-                            data: [238, 553, 746, 884, 903],
-                            backgroundColor: "rgba(163,103,126,1)",
-                            hoverBackgroundColor: "rgba(140,85,100,1)"
-                        }, {
-                            data: [1238, 553, 746, 884, 903],
-                            backgroundColor: "rgba(63,203,226,1)",
-                            hoverBackgroundColor: "rgba(46,185,235,1)"
-                        }]
+                            datasets: []
+                        }
                     }
+                );
+
+                for (j = 0; j < cyclesLineup[i].length; j++) {
+                    addData(currentChart, cyclesLineup[i][j].ID, cyclesLineup[i][j].time, randomColorGenerator());
                 }
-            );
+            }
+
+            function randomColorGenerator() {
+                const hex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'F'];
+                let randomColor = "#";
+
+                for (var j = 0; j < 6; j++) {
+                    randomColor += hex[Math.floor(Math.random() * hex.length)]
+                }
+
+                return randomColor
+            }
+
+            function addData(chart, label, data, color) {
+                const newData = {
+                    label: label,
+                    data: [data],
+                    backgroundColor: color
+                }
+
+                chart.data.datasets.push(newData);
+                chart.update();
+            }
+
         }
 
 
@@ -931,7 +1022,7 @@ window.onload = () => {
 
             //Line time calculation
             lineTime = cyclesLineupTimes.length * limitInput.value;
-            console.log("T = " + lineTime)
+            solutionInfoT.innerText = "T = " + lineTime;
 
 
             //Line efficiency calculation
@@ -939,7 +1030,7 @@ window.onload = () => {
                 tmpSum += e;
             });
             lineEfficiency = (tmpSum / (lineTime)) * 100;
-            console.log("LE = " + lineEfficiency + "%")
+            solutionInfoLE.innerText = "LE = " + lineEfficiency.toFixed(2) + " %";
 
 
             //Smoothness index calculation
@@ -948,7 +1039,7 @@ window.onload = () => {
                 tmpSum += Math.pow(limitInput.value - e, 2);
             });
             smoothnessIndex = Math.sqrt(tmpSum);
-            console.log("SI = √(" + tmpSum + ") = " + smoothnessIndex.toFixed(3));
+            solutionInfoSI.innerText = "SI = √(" + tmpSum + ") = " + smoothnessIndex.toFixed(2);
         }
     }
 };

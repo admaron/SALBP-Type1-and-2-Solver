@@ -42,6 +42,11 @@ html {
   background-color: #191919;
 }
 
+body {
+  max-width: 1920px;
+  margin: auto;
+}
+
 .hide {
   opacity: 0;
   pointer-events: none;
@@ -98,7 +103,7 @@ header #sourceBTN {
 }
 
 #sourceWrapper {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
@@ -205,9 +210,6 @@ header #sourceBTN {
 }
 
 #visualizationWrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100vh;
   max-height: 100vh;
@@ -253,14 +255,63 @@ header #sourceBTN {
   padding: 0 10px;
 }
 
-#ganttChartsWrapper {
-  padding: 100px;
+#solutionWrapper {
+  margin: 100px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #3568cc;
 }
-#ganttChartsWrapper #methodDisplay {
+#solutionWrapper * {
+  transition: none;
+}
+#solutionWrapper #solutionType {
+  flex-basis: 55%;
+  background-color: #3568cc;
   color: #fff;
   font-size: 35px;
-  margin-bottom: 30px;
   font-weight: 300;
+  padding: 25px 25px 25px 50px;
+}
+#solutionWrapper #solutionType span {
+  font-weight: 700;
+}
+#solutionWrapper #solutionInfoC,
+#solutionWrapper #solutionInfoHeuristic,
+#solutionWrapper #solutionInfoK {
+  flex-basis: 15%;
+  background-color: #5386ea;
+  color: #fff;
+  font-size: 35px;
+  font-weight: 500;
+  padding: 25px;
+  text-align: center;
+  border-left: 2px solid #3568cc;
+}
+#solutionWrapper #solutionInfoLE,
+#solutionWrapper #solutionInfoSI,
+#solutionWrapper #solutionInfoT {
+  flex-basis: 30%;
+  flex-grow: 1;
+  background-color: #3568cc;
+  color: #fff;
+  font-size: 35px;
+  font-weight: 500;
+  padding: 25px;
+  text-align: center;
+  border-left: 2px solid #5386ea;
+}
+#solutionWrapper #ganttChartsWrapper {
+  width: 100%;
+  padding: 25px 0;
+  background-color: #fff;
+}
+#solutionWrapper #ganttChartsWrapper canvas {
+  background-color: #fff;
+  padding: 50px 100px;
+  max-height: 50vh;
 }
 
 .line {
