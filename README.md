@@ -6,7 +6,7 @@
 ## Introduction
 The main goal of the project is to develop a web application to solve Simple Assembly Line Balancing Problem (SALBP) Type 1 and Type 2. Main functionalities implemented in this project are:
 - Implementation of heuristics such as WET, RPW, NOF and NOiF,
-- Quality assessment using 3 indicators such as smoothness coefficient, efficiency coefficient and line time,
+- Quality assessment using 3 indicators such as Smoothness Index(SI), Line Efficiency(LE) and Line Time(T),
 - Complete Gantt chart and precedence graph visualization,
 - TXT file data read,
 - User data entry,
