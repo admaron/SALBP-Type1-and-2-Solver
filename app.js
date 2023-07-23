@@ -43,7 +43,7 @@ window.onload = () => {
 
 
     //! Window resize handler
-    window.addEventListener('resize', () => {
+    window.onresize = () => {
         clearConnections();
 
         if (error) {
@@ -52,7 +52,7 @@ window.onload = () => {
             generateConnections();
             console.clear();
         }
-    });
+    };
 
 
     //! SALBP-1 choice handler
