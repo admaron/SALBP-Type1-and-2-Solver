@@ -11,7 +11,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
 
-    <title>ALBP Graph Visualization</title>
+    <title>SALBP-1 & SALBP-2 Solver</title>
 </head>
 
 <body>
@@ -37,13 +37,18 @@
 
     <div id="sourceWrapper">
         <h1>Choose a TXT file or enter data manually</h1>
+        <div id="SALBP_type">
+            <p id="SALBP-1" class="active">SALBP-1</p>
+            <p id="SALBP-2" class="notActive">SALBP-2</p>
+        </div>
         <form>
             <input type="file" id="filePicker" accept=".txt" required>
             <textarea id="source" placeholder='1 1 "succs" [2, 3],&#10;2 1 "preds" [1]' spellcheck="false"></textarea>
             <div>
-                <label for="cPicker">c =
-                    <input type="number" id="cPicker" value="15" min="1" required>
+                <label for="limitPicker" id="limitPickerLabel">c =
+                    <input type="number" id="limitPicker" value="15" min="1" required>
                 </label>
+
                 <select name="methodPicker" id="methodPicker" required>
                     <option value="WET">WET</option>
                     <option value="RPW">RPW</option>

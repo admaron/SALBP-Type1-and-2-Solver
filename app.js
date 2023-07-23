@@ -6,6 +6,8 @@ let maxIterations = 100;
 window.onload = () => {
 
     //! Global variables
+    const SALBP1_BTN = document.querySelector("#SALBP-1");
+    const SALBP2_BTN = document.querySelector("#SALBP-2");
     const updateBTN = document.querySelector("#updateBTN");
     const copyBTN = document.querySelector("#copyBTN");
     const sourceBTN = document.querySelector("#sourceBTN");
@@ -14,12 +16,14 @@ window.onload = () => {
     const notificationELEM = document.querySelector("#notification");
     const highlight = document.querySelector("#highlight");
     const fileInput = document.querySelector("#filePicker");
-    const cInput = document.querySelector("#cPicker");
+    const limitInputLabel = document.querySelector("#limitPickerLabel");
+    const limitInput = document.querySelector("#limitPicker");
     const methodInput = document.querySelector("#methodPicker");
 
     let Data = []; // Array of input data (objects) created by createDataObject()
     let Lines = []; // Array of line data (objects) created by createLineObject()
     let nodesStorage = [-1]; // Array of graph nodes (DOM elements)
+    let typeSALBP = 1;
     let highlightCurrLine = 0;
     let error = false;
     let LinesNotValid = true;
@@ -39,6 +43,40 @@ window.onload = () => {
         } else {
             generateConnections();
             console.clear();
+        }
+    });
+
+
+    //! SALBP-1 choice handler
+    SALBP1_BTN.addEventListener("click", () => {
+        if (typeSALBP != 1) {
+            SALBP1_BTN.classList.add("active");
+            SALBP1_BTN.classList.remove("notActive");
+            SALBP2_BTN.classList.remove("active");
+            SALBP2_BTN.classList.add("notActive");
+
+            limitInputLabel.innerHTML = "c" + limitInputLabel.innerHTML.substring(0 + 1);
+            typeSALBP = 1;
+            notificationUpdate('SALBP-1 selected!', 1500);
+        } else {
+            notificationUpdate('SALBP-1 already selected!', 1500);
+        }
+    });
+
+
+    //! SALBP-2 choice handler
+    SALBP2_BTN.addEventListener("click", () => {
+        if (typeSALBP != 2) {
+            SALBP2_BTN.classList.add("active");
+            SALBP2_BTN.classList.remove("notActive");
+            SALBP1_BTN.classList.remove("active");
+            SALBP1_BTN.classList.add("notActive");
+
+            limitInputLabel.innerHTML = "m" + limitInputLabel.innerHTML.substring(0 + 1);
+            typeSALBP = 2;
+            notificationUpdate('SALBP-2 selected!', 1500);
+        } else {
+            notificationUpdate('SALBP-2 already selected!', 1500);
         }
     });
 
@@ -562,13 +600,13 @@ window.onload = () => {
 
     //! BLM problem solver function
     function BLMsolver() {
-        if (cInput.value < 0) {
+        if (limitInput.value < 0) {
             errorHandler();
             notificationUpdate('Incorrect c value (not positive)', 1500);
             throw new Error("Incorrect c value (not positive)");
         }
 
-        if (cInput.value == 0) {
+        if (limitInput.value == 0) {
             errorHandler();
             notificationUpdate('Incorrect c value (null)', 1500);
             throw new Error("Incorrect c value (null)");
@@ -804,7 +842,7 @@ window.onload = () => {
             function cyclesSpaceCheck(availableTask, i) {
 
                 // New cycle creation check
-                if (cyclesLineupTimes[M] == cInput.value || moveToNextcycle) {
+                if (cyclesLineupTimes[M] == limitInput.value || moveToNextcycle) {
                     M++;
                     cyclesLineupTimes[M] = 0;
                     cyclesLineup.push(currentLineup);
@@ -813,7 +851,7 @@ window.onload = () => {
                 }
 
                 // Task time fit check 
-                if (cyclesLineupTimes[M] + availableTask.time <= cInput.value) {
+                if (cyclesLineupTimes[M] + availableTask.time <= limitInput.value) {
                     cyclesLineupTimes[M] += availableTask.time;
                     currentLineup.push(availableTask);
 
@@ -881,7 +919,7 @@ window.onload = () => {
 
 
             //Line time calculation
-            lineTime = cyclesLineupTimes.length * cInput.value;
+            lineTime = cyclesLineupTimes.length * limitInput.value;
             console.log("T = " + lineTime)
 
 
@@ -896,7 +934,7 @@ window.onload = () => {
             //Smoothness index calculation
             tmpSum = 0;
             cyclesLineupTimes.forEach(e => {
-                tmpSum += Math.pow(cInput.value - e, 2);
+                tmpSum += Math.pow(limitInput.value - e, 2);
             });
             smoothnessIndex = Math.sqrt(tmpSum);
             console.log("SI = √(" + tmpSum + ") = " + smoothnessIndex.toFixed(3));

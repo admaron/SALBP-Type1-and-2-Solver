@@ -46,7 +46,7 @@ $secondary-color: #5386ea;
     padding: 0;
     box-sizing: border-box;
     font-family: Poppins;
-    transition: all 0.5s;
+    transition: all 0.3s;
 }
 
 html {
@@ -131,6 +131,38 @@ header {
         font-weight: 300;
     }
 
+    #SALBP_type {
+        width: 300px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        color: #fff;
+
+        p {
+            flex-basis: 50%;
+            padding: 15px 0;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-bottom: 2px solid #191919;
+        }
+
+        .notActive {
+            background-color: #191919;
+        }
+
+        .notActive:hover {
+            background-color: $secondary-color;
+            border-bottom: 2px solid $secondary-color;
+        }
+
+        .active {
+            background-color: $main-color;
+            border-bottom: 2px solid $secondary-color;
+        }
+    }
+
     form {
         width: 300px;
         background-color: $main-color;
@@ -145,7 +177,7 @@ header {
         textarea {
             font-size: 16px;
             width: 300px;
-            height: 450px;
+            height: 425px;
             padding: 30px;
             overflow-y: scroll;
             resize: none;
@@ -162,8 +194,8 @@ header {
                 flex-basis: 50%;
             }
 
-            #cPicker {
-                width: 70%;
+            #limitPicker {
+                width: 65%;
                 padding: 5px 0 5px 5px;
             }
 
