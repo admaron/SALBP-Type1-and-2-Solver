@@ -20,13 +20,14 @@ window.onload = () => {
     const limitInput = document.querySelector("#limitPicker");
     const methodInput = document.querySelector("#methodPicker");
     const ganttChartsWrapper = document.querySelector("#ganttChartsWrapper");
-    const solutionType = document.querySelector("#solutionType");
-    const solutionInfoC = document.querySelector("#solutionInfoC");
-    const solutionInfoHeuristic = document.querySelector("#solutionInfoHeuristic");
-    const solutionInfoK = document.querySelector("#solutionInfoK");
-    const solutionInfoLE = document.querySelector("#solutionInfoLE");
-    const solutionInfoSI = document.querySelector("#solutionInfoSI");
-    const solutionInfoT = document.querySelector("#solutionInfoT");
+    const solutionInforTaskAmount = document.querySelector("#taskAmount");
+    const solutionType = document.querySelector("#solutionType h4");
+    const solutionInfoC = document.querySelector("#solutionInfoC h4");
+    const solutionInfoHeuristic = document.querySelector("#solutionInfoHeuristic h4");
+    const solutionInfoK = document.querySelector("#solutionInfoK h4");
+    const solutionInfoLE = document.querySelector("#solutionInfoLE h4");
+    const solutionInfoSI = document.querySelector("#solutionInfoSI h4");
+    const solutionInfoT = document.querySelector("#solutionInfoT h4");
 
     let Data = []; // Array of input data (objects) created by createDataObject()
     let Lines = []; // Array of line data (objects) created by createLineObject()
@@ -167,8 +168,10 @@ window.onload = () => {
         if (!error) {
             if (sourceWRAP.classList.contains("hide")) {
                 sourceWRAP.classList.remove("hide");
+                sourceBTN.innerText = "Hide data panel";
             } else {
                 sourceWRAP.classList.add("hide");
+                sourceBTN.innerText = "Change data";
             }
         }
     })
@@ -261,7 +264,7 @@ window.onload = () => {
 
             Data[i] = createDataObject(sourceData[i]);
         }
-
+        solutionInforTaskAmount.innerText = "Tasks amount: " + sourceData.length;
 
         //! Data validation function
         function validateSourceData(data, i, dataLength) {
@@ -532,7 +535,7 @@ window.onload = () => {
                             size: 4,
                             path: 'straight',
                             endPlug: 'arrow3',
-                            color: '#989898',
+                            color: '#dddddd',
                             endPlugSize: 1.5
                         });
                     }
@@ -655,7 +658,7 @@ window.onload = () => {
         generateGanttCharts();
         calculateQualityIndicators();
 
-        solutionType.innerHTML = "<span>SALBP-" + typeSALBP + "</span> SOLUTION";
+        solutionType.innerHTML = "SALBP-" + typeSALBP;
         solutionInfoHeuristic.innerText = methodInput.options[methodInput.selectedIndex].text;
         if (typeSALBP == 1) {
             solutionInfoC.innerText = "c = " + limitInput.value;
@@ -1030,7 +1033,7 @@ window.onload = () => {
                 tmpSum += e;
             });
             lineEfficiency = (tmpSum / (lineTime)) * 100;
-            solutionInfoLE.innerText = "LE = " + lineEfficiency.toFixed(2) + " %";
+            solutionInfoLE.innerText = "LE = " + lineEfficiency.toFixed(2) + "%";
 
 
             //Smoothness index calculation

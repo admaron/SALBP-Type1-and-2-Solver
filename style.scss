@@ -50,7 +50,8 @@ $secondary-color: #5386ea;
 }
 
 html {
-    background-color: #191919;
+    background-color: #F5F6FE;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -70,12 +71,72 @@ header {
     width: 100%;
     height: fit-content;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 25px;
     z-index: 1000;
+    background: #FFF;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.10);
 
     #sourceBTN {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         cursor: pointer;
+        border-radius: 5px;
+        border: 2px solid $main-color;
+        width: 200px;
+        height: 50px;
+        color: #000;
+        text-align: center;
+        font-family: Poppins;
+        font-size: 18px;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+
+    #sourceBTN:hover {
+        background-color: $main-color;
+        color: #fff;
+    }
+}
+
+aside {
+    position: fixed;
+    top: 95px;
+    left: 0;
+    z-index: 90 !important;
+    width: 200px;
+    height: calc(100vh - 95px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 100px 25px;
+    z-index: 1000;
+    background: #FFF;
+
+    div {
+        color: #000;
+        text-align: center;
+        font-family: Poppins;
+        font-size: 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        a {
+            text-decoration: none;
+            color: #989898;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    }
+
+    a:hover {
+        color: $main-color;
+
+        svg path {
+            fill: $main-color;
+        }
     }
 }
 
@@ -92,6 +153,7 @@ header {
     border-radius: 20px;
     display: flex;
     align-items: center;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.10);
 
     svg {
         height: 20px;
@@ -125,16 +187,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #101010;
-
-    h1 {
-        color: #fff;
-        font-size: 20px;
-        margin-bottom: 30px;
-        text-transform: uppercase;
-        text-align: center;
-        font-weight: 300;
-    }
+    background-color: #F5F6FE;
 
     #SALBP_type {
         width: 300px;
@@ -239,119 +292,236 @@ header {
     }
 }
 
-#visualizationWrapper {
-    width: 100%;
-    height: 100vh;
-    max-height: 100vh;
-    display: flex;
-    padding: 75px;
-    z-index: 10;
-    pointer-events: none;
+:target {
+    scroll-margin-top: 150px;
+}
 
-    .nodesColumn {
+main {
+    width: calc(100% - 200px);
+    position: absolute;
+    top: 95px;
+    left: 200px;
+    padding: 100px 100px 25px 100px;
+
+    .sectionTitle {
         flex-basis: 100%;
-        height: 100%;
         display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        min-width: 200px;
+        justify-content: space-between;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 30px;
 
-        .node {
-            width: 75px;
-            height: 75px;
-            text-align: center;
-            background-color: #fff;
+        h2 {
+            color: #000;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+        }
+
+        h3 {
+            color: #000;
+            text-align: right;
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 1.12px;
+        }
+    }
+
+    #visualizationMainWrapper {
+        width: 100%;
+        height: fit-content;
+        max-height: 100vh;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 50px 50px 25px 50px;
+        pointer-events: none;
+        background-color: #fff;
+
+        #visualizationWrapper {
+            flex-basis: 100%;
+            height: fit-content;
+            max-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            border-radius: 100%;
-            position: relative;
+            pointer-events: none;
+            background-color: #fff;
+            padding: 50px 25px 0 25px;
 
-            span {
-                font-size: 25px;
-                font-weight: 800;
+            .nodesColumn {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: center;
+                min-width: 175px;
+
+                .node {
+                    width: 75px;
+                    height: 75px;
+                    text-align: center;
+                    background-color: #F5F6FE;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 100%;
+                    position: relative;
+                    margin: 35px 0;
+
+                    span {
+                        font-size: 25px;
+                        font-weight: 800;
+                    }
+
+                    p {
+                        position: absolute;
+                        top: -10px;
+                        right: 0;
+                        color: #fff;
+                        font-size: 20px;
+                        background-color: $secondary-color;
+                        border-radius: 100%;
+                        min-width: 30px;
+                        min-height: 30px;
+                        padding: 0 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    #solutionWrapper {
+        margin-top: 10vh;
+        max-width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10vh;
+
+        * {
+            transition: none;
+        }
+
+        #problemData {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-basis: 100%;
+            gap: 40px;
+
+            #solutionType {
+                background-color: $main-color !important;
+            }
+
+            #solutionType,
+            #solutionInfoC,
+            #solutionInfoHeuristic,
+            #solutionInfoK {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                flex-basis: 25%;
+                background-color: $secondary-color;
+                color: #fff;
+                padding: 25px;
+                text-align: center;
+                padding: 65px;
+                border-radius: 10px;
+
+                h4 {
+                    font-size: 30px;
+                    font-weight: 700;
+                    letter-spacing: 2.1px;
+
+                }
+
+                p {
+                    font-size: 16px;
+                    font-weight: 400;
+                    letter-spacing: 1.12px;
+
+                }
+            }
+        }
+
+        #ganttCharts {
+            background-color: #fff;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            flex-basis: 100%;
+            padding: 50px 50px 25px 50px;
+
+            #ganttChartsWrapper {
+                flex-basis: 100%;
+                padding: 25px 0;
+                background-color: #fff;
+
+                canvas {
+                    max-width: 100%;
+                    background-color: #fff;
+                    padding: 50px 100px;
+                    max-height: 50vh;
+                }
+            }
+
+        }
+
+        #qualityIndicators {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-basis: 100%;
+            gap: 40px;
+
+            #solutionInfoLE,
+            #solutionInfoSI,
+            #solutionInfoT {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                flex-basis: 35%;
+                background-color: $secondary-color;
+                color: #fff;
+                padding: 25px;
+                text-align: center;
+                padding: 65px;
+                border-radius: 10px;
+            }
+
+            #solutionInfoSI {
+                flex-basis: 50%;
+            }
+
+            h4 {
+                font-size: 30px;
+                font-weight: 700;
+                letter-spacing: 2.1px;
+
             }
 
             p {
-                position: absolute;
-                top: -10px;
-                right: 0;
-                color: #fff;
-                font-size: 20px;
-                background-color: $secondary-color;
-                border-radius: 100%;
-                min-width: 30px;
-                min-height: 30px;
-                padding: 0 10px;
+                font-size: 16px;
+                font-weight: 400;
+                letter-spacing: 1.12px;
+
             }
         }
-    }
-}
 
-#solutionWrapper {
-    margin: 100px;
-    max-width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    background-color: $main-color;
-
-    * {
-        transition: none;
     }
 
-    #solutionType {
-        flex-basis: 55%;
-        background-color: $main-color;
-        color: #fff;
-        font-size: 35px;
+    footer {
+        margin-top: 10vh;
+        width: 100%;
+        text-align: center;
+        font-size: 13px;
         font-weight: 300;
-        padding: 25px 25px 25px 50px;
 
         span {
-            font-weight: 700;
+            color: $main-color;
+            font-weight: 400;
         }
-    }
 
-    #solutionInfoC,
-    #solutionInfoHeuristic,
-    #solutionInfoK {
-        flex-basis: 15%;
-        background-color: $secondary-color;
-        color: #fff;
-        font-size: 35px;
-        font-weight: 500;
-        padding: 25px;
-        text-align: center;
-        border-left: 2px solid $main-color;
-    }
-
-    #solutionInfoLE,
-    #solutionInfoSI,
-    #solutionInfoT {
-        flex-basis: 30%;
-        flex-grow: 1;
-        background-color: $main-color;
-        color: #fff;
-        font-size: 35px;
-        font-weight: 500;
-        padding: 25px;
-        text-align: center;
-        border-left: 2px solid $secondary-color;
-    }
-
-    #ganttChartsWrapper {
-        width: 100%;
-        padding: 25px 0;
-        background-color: #fff;
-
-        canvas {
-            background-color: #fff;
-            padding: 50px 100px;
-            max-height: 50vh;
-        }
     }
 }
 
