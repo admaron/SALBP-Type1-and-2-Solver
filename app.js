@@ -2,6 +2,7 @@
 let maxIterations = 100;
 
 
+
 //! Main app
 window.onload = () => {
 
@@ -40,7 +41,7 @@ window.onload = () => {
     let ColumnNodeSwitches = 0; // Counter of node position swaps in a column - switchNodes()
     let solutionData = []; // Array of tasks (IDs) after prioritization
     let cyclesLineup = []; // Array of task (objects) placed in cycles
-    let cyclesLineupTimes = [0];; //Array of space(time) used in each cycle
+    let cyclesLineupTimes = [0]; //Array of space(time) used in each cycle
     let currentDate = new Date;
 
 
@@ -107,8 +108,6 @@ window.onload = () => {
     solveBTN.addEventListener("click", (event) => {
         event.preventDefault();
 
-        sourceBTN.classList.remove("hide");
-
         Data = [];
         solutionData = [];
         nodesStorage = [-1];
@@ -149,8 +148,9 @@ window.onload = () => {
         cyclesLineupTimes = [0];
         BLMsolver();
 
-        notificationUpdate('Solution found!', 1500);
+        sourceBTN.classList.remove("hide");
         sourceWRAP.classList.add("hide");
+        notificationUpdate('Solution found!', 1500);
     })
 
 
@@ -641,20 +641,41 @@ window.onload = () => {
                 break;
         }
 
+        let c;
+
         if (typeSALBP == 1) {
-            lineupSolver();
+            c = limitInput.value;
+            SALBP1_lineupSolver(solutionData);
         } else if (typeSALBP == 2) {
-            console.log("Lineup for SALBP-2");
+            const t_sum = Data.reduce((accumulator, object) => {
+                return accumulator + object.time;
+            }, 0);
+            const t_max = Math.max(...Data.map(object => {
+                return object.time;
+            }));
+
+            c = Math.max(Math.round(t_sum / limitInput.value), t_max);
+            SALBP1_lineupSolver(solutionData);
+
+            let loopTerminator = 0;
+            let UB = 10;
+            while ((cyclesLineup.length != limitInput.value) && loopTerminator < UB) {
+                cyclesLineup = [];
+                cyclesLineupTimes = [0];
+                c++;
+                loopTerminator++;
+                SALBP1_lineupSolver(solutionData);
+            }
         }
+
         generateGanttCharts();
         calculateQualityIndicators();
 
         solutionType.innerHTML = "SALBP-" + typeSALBP;
         solutionInfoHeuristic.innerText = methodInput.options[methodInput.selectedIndex].text;
-        if (typeSALBP == 1) {
-            solutionInfoC.innerText = "c = " + limitInput.value;
-            solutionInfoK.innerText = "K = " + cyclesLineup.length;
-        }
+        solutionInfoC.innerText = "c = " + c;
+        solutionInfoK.innerText = "K = " + cyclesLineup.length;
+
 
         //! WET method prioritization solver function
         function WETsolver() {
@@ -782,8 +803,8 @@ window.onload = () => {
         }
 
 
-        //! Cycles lineup solver function
-        function lineupSolver() {
+        //! SALBP1 solver function
+        function SALBP1_lineupSolver(solutionData) {
             Data.sort((a, b) => {
                 return a.ID - b.ID;
             });
@@ -819,14 +840,16 @@ window.onload = () => {
 
                         // If task is available check cycle's space
                         if (Data[solutionData[i] - 1].prevNodes.length == check) {
-                            let succes = cyclesSpaceCheck(Data[solutionData[i] - 1], i);
-                            if (succes) {
+                            let success = cyclesSpaceCheck(Data[solutionData[i] - 1], i);
+                            if (success) {
                                 break;
                             }
                         }
                     } else {
-                        cyclesSpaceCheck(Data[solutionData[i] - 1], i);
-                        break;
+                        let success = cyclesSpaceCheck(Data[solutionData[i] - 1], i);
+                        if (success) {
+                            break;
+                        }
                     }
                 }
 
@@ -843,7 +866,6 @@ window.onload = () => {
             if (currentLineup.length != 0) {
                 cyclesLineup.push(currentLineup);
             }
-            console.log(cyclesLineup);
 
 
             //! Data object updating function
@@ -865,7 +887,7 @@ window.onload = () => {
             function cyclesSpaceCheck(availableTask, i) {
 
                 // New cycle creation check
-                if (cyclesLineupTimes[M] == limitInput.value || moveToNextcycle) {
+                if (cyclesLineupTimes[M] == c || moveToNextcycle) {
                     M++;
                     cyclesLineupTimes[M] = 0;
                     cyclesLineup.push(currentLineup);
@@ -874,7 +896,7 @@ window.onload = () => {
                 }
 
                 // Task time fit check 
-                if (cyclesLineupTimes[M] + availableTask.time <= limitInput.value) {
+                if (cyclesLineupTimes[M] + availableTask.time <= c) {
                     cyclesLineupTimes[M] += availableTask.time;
                     currentLineup.push(availableTask);
 
@@ -904,7 +926,7 @@ window.onload = () => {
                             scales: {
                                 x: {
                                     stacked: true,
-                                    max: parseInt(limitInput.value),
+                                    max: parseInt(c),
                                     grid: {
                                         color: "#e0e0e0"
                                     },
@@ -1015,7 +1037,7 @@ window.onload = () => {
 
 
             //Line time calculation
-            lineTime = cyclesLineupTimes.length * limitInput.value;
+            lineTime = cyclesLineupTimes.length * c;
             solutionInfoT.innerText = "T = " + lineTime;
 
 
@@ -1030,7 +1052,7 @@ window.onload = () => {
             //Smoothness index calculation
             tmpSum = 0;
             cyclesLineupTimes.forEach(e => {
-                tmpSum += Math.pow(limitInput.value - e, 2);
+                tmpSum += Math.pow(c - e, 2);
             });
             smoothnessIndex = Math.sqrt(tmpSum);
             solutionInfoSI.innerText = "SI = √(" + tmpSum + ") = " + smoothnessIndex.toFixed(2);

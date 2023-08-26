@@ -174,6 +174,7 @@ aside a:hover svg path {
 }
 #sourceWrapper form {
   width: 45%;
+  max-width: 900px;
   display: flex;
   justify-content: space-between;
   gap: 50px;
@@ -226,7 +227,7 @@ aside a:hover svg path {
   padding: 30px;
 }
 #sourceWrapper form #sourceWrapperLeft #additionalData label {
-  padding: 5px;
+  padding: 0;
   flex-basis: 100%;
   display: flex;
   flex-direction: row;
@@ -250,6 +251,17 @@ aside a:hover svg path {
   font-weight: 700;
   letter-spacing: 2.1px;
 }
+#sourceWrapper form #sourceWrapperLeft #additionalData label input:focus {
+  outline: none !important;
+}
+#sourceWrapper form #sourceWrapperLeft #additionalData label input::-webkit-outer-spin-button,
+#sourceWrapper form #sourceWrapperLeft #additionalData label input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#sourceWrapper form #sourceWrapperLeft #additionalData label input[type=number] {
+  -moz-appearance: textfield;
+}
 #sourceWrapper form #sourceWrapperLeft #additionalData hr {
   flex-basis: 100%;
   border: 1px solid #ddd;
@@ -259,6 +271,7 @@ aside a:hover svg path {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-top: 5px;
 }
 #sourceWrapper form #sourceWrapperLeft #additionalData #methodPickerWrapper p {
   flex-basis: 100%;
@@ -342,7 +355,6 @@ aside a:hover svg path {
   height: 425px;
   margin: 0 20px;
   padding: 30px;
-  overflow-y: scroll;
   resize: none;
   border: none;
   border-top: 1px solid #ddd;
