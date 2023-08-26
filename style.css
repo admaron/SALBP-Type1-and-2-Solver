@@ -93,7 +93,7 @@ aside {
   top: 95px;
   left: 0;
   z-index: 90 !important;
-  width: 200px;
+  width: 175px;
   height: calc(100vh - 95px);
   display: flex;
   flex-direction: column;
@@ -161,101 +161,191 @@ aside a:hover svg path {
 
 #sourceWrapper {
   position: fixed;
-  top: 0;
+  top: 75px;
   left: 0;
   z-index: 100;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 75px);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   background-color: #F5F6FE;
 }
-#sourceWrapper #SALBP_type {
-  width: 300px;
+#sourceWrapper form {
+  width: 45%;
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+#sourceWrapper form #sourceWrapperLeft {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  color: #fff;
-}
-#sourceWrapper #SALBP_type p {
-  flex-basis: 50%;
-  padding: 15px 0;
-  text-align: center;
-  font-weight: 500;
-  letter-spacing: 1px;
-  cursor: pointer;
-  border-bottom: 2px solid #191919;
-}
-#sourceWrapper #SALBP_type .notActive {
-  background-color: #191919;
-}
-#sourceWrapper #SALBP_type .notActive:hover {
-  background-color: #5386ea;
-  border-bottom: 2px solid #5386ea;
-}
-#sourceWrapper #SALBP_type .active {
-  background-color: #3568cc;
-  border-bottom: 2px solid #5386ea;
-}
-#sourceWrapper form {
-  width: 300px;
-  background-color: #3568cc;
-  color: #fff;
-  display: flex;
   flex-wrap: wrap;
+  flex-basis: 40%;
+  min-width: 300px;
+  gap: 35px;
 }
-#sourceWrapper form #filePicker {
-  margin: 15px;
-}
-#sourceWrapper form textarea {
-  font-size: 16px;
-  width: 300px;
-  height: 425px;
-  padding: 30px;
-  overflow-y: scroll;
-  resize: none;
-}
-#sourceWrapper form div {
+#sourceWrapper form #sourceWrapperLeft #SALBP_picker {
   flex-basis: 100%;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #3568cc;
+  border-radius: 10px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+       user-select: none;
+  padding: 35px;
+}
+#sourceWrapper form #sourceWrapperLeft #SALBP_picker p {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1.12px;
+}
+#sourceWrapper form #sourceWrapperLeft #SALBP_picker #SALBP_type {
+  color: #FFF;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 2.1px;
+}
+#sourceWrapper form #sourceWrapperLeft #additionalData {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+}
+#sourceWrapper form #sourceWrapperLeft #additionalData label {
+  padding: 5px;
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#sourceWrapper form #sourceWrapperLeft #additionalData label #limitPickerDesc {
+  flex-basis: 100%;
+  color: #000;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1.12px;
+}
+#sourceWrapper form #sourceWrapperLeft #additionalData label #limitPicker {
+  width: 100%;
+  padding: 5px 0 0 0;
+  border: none;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 2.1px;
+}
+#sourceWrapper form #sourceWrapperLeft #additionalData hr {
+  flex-basis: 100%;
+  border: 1px solid #ddd;
+}
+#sourceWrapper form #sourceWrapperLeft #additionalData #methodPickerWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
 }
-#sourceWrapper form div label {
-  padding: 15px;
-  flex-basis: 50%;
+#sourceWrapper form #sourceWrapperLeft #additionalData #methodPickerWrapper p {
+  flex-basis: 100%;
+  color: #000;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1.12px;
 }
-#sourceWrapper form div #limitPicker {
-  width: 65%;
-  padding: 5px 0 5px 5px;
-}
-#sourceWrapper form div #methodPicker {
-  flex-basis: 50%;
-  margin: 15px;
+#sourceWrapper form #sourceWrapperLeft #additionalData #methodPickerWrapper #methodPicker {
+  flex-basis: 100%;
   padding: 5px;
   text-align: center;
   background-color: #fff;
-}
-#sourceWrapper div {
-  width: 300px;
-  display: flex;
-  justify-content: space-evenly;
-}
-#sourceWrapper div button {
-  padding: 15px;
-  margin-top: 30px;
-  background-color: #3568cc;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 2.1px;
   border: none;
-  color: #fff;
-  text-transform: uppercase;
-  font-weight: 600;
 }
-#sourceWrapper div button:hover {
-  background-color: #5386ea;
+#sourceWrapper form #sourceWrapperLeft #buttons {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+#sourceWrapper form #sourceWrapperLeft #buttons button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  transform: scale(1.15);
+  border-radius: 5px;
+  border: 2px solid #3568cc;
+  background-color: transparent;
+  height: 50px;
+  padding: 0 20px;
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+#sourceWrapper form #sourceWrapperLeft #buttons button:hover {
+  background-color: #3568cc;
+  color: #fff;
+}
+#sourceWrapper form #sourceWrapperRight {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  background-color: #fff;
+  flex-basis: 55%;
+  padding-top: 30px;
+  border-radius: 10px;
+}
+#sourceWrapper form #sourceWrapperRight h4 {
+  flex-basis: 100%;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  margin: 0 30px;
+}
+#sourceWrapper form #sourceWrapperRight p {
+  flex-basis: 100%;
+  color: #323232;
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin: 0 30px 25px 30px;
+}
+#sourceWrapper form #sourceWrapperRight #filePicker {
+  flex-basis: 100%;
+  background-color: #ddd;
+  padding: 25px;
+  border-radius: 0 0 10px 10px;
+}
+#sourceWrapper form #sourceWrapperRight textarea {
+  font-size: 16px;
+  flex-basis: 100%;
+  height: 425px;
+  margin: 0 20px;
+  padding: 30px;
+  overflow-y: scroll;
+  resize: none;
+  border: none;
+  border-top: 1px solid #ddd;
 }
 
 :target {
@@ -263,11 +353,11 @@ aside a:hover svg path {
 }
 
 main {
-  width: calc(100% - 200px);
+  width: calc(100% - 175px);
   position: absolute;
   top: 95px;
-  left: 200px;
-  padding: 100px 100px 25px 100px;
+  left: 175px;
+  padding: 100px 150px 25px 150px;
 }
 main .sectionTitle {
   flex-basis: 100%;
@@ -461,7 +551,7 @@ main footer {
   font-size: 13px;
   font-weight: 300;
 }
-main footer span {
+main footer .copyrightMainInfo {
   color: #3568cc;
   font-weight: 400;
 }

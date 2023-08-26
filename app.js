@@ -6,9 +6,9 @@ let maxIterations = 100;
 window.onload = () => {
 
     //! Global variables
-    const SALBP1_BTN = document.querySelector("#SALBP-1");
-    const SALBP2_BTN = document.querySelector("#SALBP-2");
-    const updateBTN = document.querySelector("#updateBTN");
+    const SALBP_BTN = document.querySelector("#SALBP_picker");
+    const SALBP_Info = document.querySelector("#SALBP_type")
+    const solveBTN = document.querySelector("#solveBTN");
     const copyBTN = document.querySelector("#copyBTN");
     const sourceBTN = document.querySelector("#sourceBTN");
     const sourceWRAP = document.querySelector("#sourceWrapper");
@@ -16,7 +16,7 @@ window.onload = () => {
     const notificationELEM = document.querySelector("#notification");
     const highlight = document.querySelector("#highlight");
     const fileInput = document.querySelector("#filePicker");
-    const limitInputLabel = document.querySelector("#limitPickerLabel span");
+    const limitInputLabel = document.querySelector("#limitPickerDesc");
     const limitInput = document.querySelector("#limitPicker");
     const methodInput = document.querySelector("#methodPicker");
     const ganttChartsWrapper = document.querySelector("#ganttChartsWrapper");
@@ -41,6 +41,11 @@ window.onload = () => {
     let solutionData = []; // Array of tasks (IDs) after prioritization
     let cyclesLineup = []; // Array of task (objects) placed in cycles
     let cyclesLineupTimes = [0];; //Array of space(time) used in each cycle
+    let currentDate = new Date;
+
+
+    //! Copyright Year Update
+    document.querySelector("#copyrightYear").innerText = currentDate.getFullYear();
 
 
     //! Window resize handler
@@ -56,36 +61,18 @@ window.onload = () => {
     };
 
 
-    //! SALBP-1 choice handler
-    SALBP1_BTN.addEventListener("click", () => {
+    //! SALBP choice handler
+    SALBP_BTN.addEventListener("click", () => {
         if (typeSALBP != 1) {
-            SALBP1_BTN.classList.add("active");
-            SALBP1_BTN.classList.remove("notActive");
-            SALBP2_BTN.classList.remove("active");
-            SALBP2_BTN.classList.add("notActive");
-
-            limitInputLabel.innerText = "c" + limitInputLabel.innerText.substring(0 + 1);
+            SALBP_Info.innerText = "SALBP-1";
+            limitInputLabel.innerText = "Enter cycle time";
             typeSALBP = 1;
             notificationUpdate('SALBP-1 selected!', 1500);
         } else {
-            notificationUpdate('SALBP-1 already selected!', 1500);
-        }
-    });
-
-
-    //! SALBP-2 choice handler
-    SALBP2_BTN.addEventListener("click", () => {
-        if (typeSALBP != 2) {
-            SALBP2_BTN.classList.add("active");
-            SALBP2_BTN.classList.remove("notActive");
-            SALBP1_BTN.classList.remove("active");
-            SALBP1_BTN.classList.add("notActive");
-
-            limitInputLabel.innerText = "K" + limitInputLabel.innerText.substring(0 + 1);
+            SALBP_Info.innerText = "SALBP-2";
+            limitInputLabel.innerText = "Enter number of stations";
             typeSALBP = 2;
             notificationUpdate('SALBP-2 selected!', 1500);
-        } else {
-            notificationUpdate('SALBP-2 already selected!', 1500);
         }
     });
 
@@ -105,7 +92,9 @@ window.onload = () => {
 
 
     //! "Copy data" button handler
-    copyBTN.addEventListener("click", () => {
+    copyBTN.addEventListener("click", (event) => {
+        event.preventDefault();
+
         sourceTXTAREA.select();
         sourceTXTAREA.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(sourceTXTAREA.value);
@@ -114,8 +103,10 @@ window.onload = () => {
     });
 
 
-    //! "Update data" button handler
-    updateBTN.addEventListener("click", () => {
+    //! "Solve problem" button handler
+    solveBTN.addEventListener("click", (event) => {
+        event.preventDefault();
+
         sourceBTN.classList.remove("hide");
 
         Data = [];

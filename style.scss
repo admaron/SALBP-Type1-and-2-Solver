@@ -105,7 +105,7 @@ aside {
     top: 95px;
     left: 0;
     z-index: 90 !important;
-    width: 200px;
+    width: 175px;
     height: calc(100vh - 95px);
     display: flex;
     flex-direction: column;
@@ -178,116 +178,210 @@ aside {
 
 #sourceWrapper {
     position: fixed;
-    top: 0;
+    top: 75px;
     left: 0;
     z-index: 100;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 75px);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     background-color: #F5F6FE;
 
-    #SALBP_type {
-        width: 300px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        color: #fff;
-
-        p {
-            flex-basis: 50%;
-            padding: 15px 0;
-            text-align: center;
-            font-weight: 500;
-            letter-spacing: 1px;
-            cursor: pointer;
-            border-bottom: 2px solid #191919;
-        }
-
-        .notActive {
-            background-color: #191919;
-        }
-
-        .notActive:hover {
-            background-color: $secondary-color;
-            border-bottom: 2px solid $secondary-color;
-        }
-
-        .active {
-            background-color: $main-color;
-            border-bottom: 2px solid $secondary-color;
-        }
-    }
-
     form {
-        width: 300px;
-        background-color: $main-color;
-        color: #fff;
+        width: 45%;
         display: flex;
-        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 50px;
 
-        #filePicker {
-            margin: 15px;
-        }
-
-        textarea {
-            font-size: 16px;
-            width: 300px;
-            height: 425px;
-            padding: 30px;
-            overflow-y: scroll;
-            resize: none;
-        }
-
-        div {
-            flex-basis: 100%;
+        #sourceWrapperLeft {
             display: flex;
-            justify-content: space-evenly;
-            align-items: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            flex-basis: 40%;
+            min-width: 300px;
+            gap: 35px;
 
-            label {
-                padding: 15px;
-                flex-basis: 50%;
+            #SALBP_picker {
+                flex-basis: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: center;
+                background-color: $main-color;
+                border-radius: 10px;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                padding: 35px;
+
+                p {
+                    color: #fff;
+                    font-size: 16px;
+                    font-weight: 400;
+                    letter-spacing: 1.12px;
+                }
+
+                #SALBP_type {
+                    color: #FFF;
+                    text-align: center;
+                    font-size: 30px;
+                    font-weight: 700;
+                    letter-spacing: 2.1px;
+                }
             }
 
-            #limitPicker {
-                width: 65%;
-                padding: 5px 0 5px 5px;
-            }
-
-            #methodPicker {
-                flex-basis: 50%;
-                margin: 15px;
-                padding: 5px;
-                text-align: center;
+            #additionalData {
+                flex-basis: 100%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 25px;
                 background-color: #fff;
+                border-radius: 10px;
+                padding: 30px;
+
+                label {
+                    padding: 5px;
+                    flex-basis: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    flex-wrap: wrap;
+
+                    #limitPickerDesc {
+                        flex-basis: 100%;
+                        color: #000;
+                        text-align: center;
+                        font-size: 16px;
+                        font-weight: 400;
+                        letter-spacing: 1.12px;
+                    }
+
+                    #limitPicker {
+                        width: 100%;
+                        padding: 5px 0 0 0;
+                        border: none;
+                        text-align: center;
+                        font-size: 30px;
+                        font-weight: 700;
+                        letter-spacing: 2.1px;
+                    }
+                }
+
+                hr {
+                    flex-basis: 100%;
+                    border: 1px solid #ddd;
+                }
+
+                #methodPickerWrapper {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    align-items: center;
+
+                    p {
+                        flex-basis: 100%;
+                        color: #000;
+                        text-align: center;
+                        font-size: 16px;
+                        font-weight: 400;
+                        letter-spacing: 1.12px;
+                    }
+
+                    #methodPicker {
+                        flex-basis: 100%;
+                        padding: 5px;
+                        text-align: center;
+                        background-color: #fff;
+                        text-align: center;
+                        font-size: 30px;
+                        font-weight: 700;
+                        letter-spacing: 2.1px;
+                        border: none;
+                    }
+                }
+            }
+
+            #buttons {
+                flex-basis: 100%;
+                display: flex;
+                justify-content: space-between;
+
+                button {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    border: 2px solid $main-color;
+                    background-color: transparent;
+                    height: 50px;
+                    padding: 0 20px;
+                    color: #000;
+                    text-align: center;
+                    font-family: Poppins;
+                    font-size: 18px;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                }
+
+                button:hover {
+                    background-color: $main-color;
+                    color: #fff;
+                }
             }
         }
 
-    }
+        #sourceWrapperRight {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            flex-grow: 1;
+            background-color: #fff;
+            flex-basis: 55%;
+            padding-top: 30px;
+            border-radius: 10px;
 
-    div {
-        width: 300px;
-        display: flex;
-        justify-content: space-evenly;
+            h4 {
+                flex-basis: 100%;
+                font-size: 20px;
+                font-weight: 700;
+                letter-spacing: 1.4px;
+                margin: 0 30px;
+            }
 
+            p {
+                flex-basis: 100%;
+                color: #323232;
+                font-size: 14px;
+                font-weight: 300;
+                text-transform: uppercase;
+                margin: 0 30px 25px 30px;
+            }
 
-        button {
-            padding: 15px;
-            margin-top: 30px;
-            background-color: $main-color;
-            border: none;
-            color: #fff;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
+            #filePicker {
+                flex-basis: 100%;
+                background-color: #ddd;
+                padding: 25px;
+                border-radius: 0 0 10px 10px;
+            }
 
-        button:hover {
-            background-color: $secondary-color;
-            cursor: pointer;
-            transform: scale(1.15);
+            textarea {
+                font-size: 16px;
+                flex-basis: 100%;
+                height: 425px;
+                margin: 0 20px;
+                padding: 30px;
+                overflow-y: scroll;
+                resize: none;
+                border: none;
+                border-top: 1px solid #ddd;
+            }
         }
     }
 }
@@ -297,11 +391,11 @@ aside {
 }
 
 main {
-    width: calc(100% - 200px);
+    width: calc(100% - 175px);
     position: absolute;
     top: 95px;
-    left: 200px;
-    padding: 100px 100px 25px 100px;
+    left: 175px;
+    padding: 100px 150px 25px 150px;
 
     .sectionTitle {
         flex-basis: 100%;
@@ -517,11 +611,10 @@ main {
         font-size: 13px;
         font-weight: 300;
 
-        span {
+        .copyrightMainInfo {
             color: $main-color;
             font-weight: 400;
         }
-
     }
 }
 

@@ -30,7 +30,7 @@
     </header>
 
     <aside>
-        <div><a href="#visualizationMainWrapper"><svg width="30" height="24" viewBox="0 0 30 24" fill="none"
+        <div><a href="#mainWrapper"><svg width="30" height="24" viewBox="0 0 30 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M18 15H12C11.1717 15 10.5 15.6717 10.5 16.5V22.5C10.5 23.3283 11.1717 24 12 24H18C18.8283 24 19.5 23.3283 19.5 22.5V16.5C19.5 15.6717 18.8283 15 18 15ZM9 1.5C9 0.671719 8.32828 0 7.5 0H1.5C0.671719 0 0 0.671719 0 1.5V7.5C0 8.32828 0.671719 9 1.5 9H5.98688L9.41625 15.0019C9.93656 14.1084 10.8938 13.5 12 13.5H12.0131L9 8.22703V6H19.5V3H9V1.5ZM28.5 0H22.5C21.6717 0 21 0.671719 21 1.5V7.5C21 8.32828 21.6717 9 22.5 9H28.5C29.3283 9 30 8.32828 30 7.5V1.5C30 0.671719 29.3283 0 28.5 0Z"
@@ -72,34 +72,53 @@
     <div id="highlight"></div>
 
     <div id="sourceWrapper">
-        <div id="SALBP_type">
-            <p id="SALBP-1" class="active">SALBP-1</p>
-            <p id="SALBP-2" class="notActive">SALBP-2</p>
-        </div>
         <form>
-            <input type="file" id="filePicker" accept=".txt" required>
-            <textarea id="source" placeholder='1 1 "succs" [2, 3],&#10;2 1 "preds" [1]' spellcheck="false"></textarea>
-            <div>
-                <label for="limitPicker" id="limitPickerLabel">
-                    <span>c =</span>
-                    <input type="number" id="limitPicker" value="15" min="1" required>
-                </label>
 
-                <select name="methodPicker" id="methodPicker" required>
-                    <option value="WET">WET</option>
-                    <option value="RPW">RPW</option>
-                    <option value="NOF">NOF</option>
-                    <option value="NOIF">NOIF</option>
-                </select>
+            <div id="sourceWrapperLeft">
+                <div id="SALBP_picker">
+                    <p>Click to change problem type</p>
+                    <p id="SALBP_type" class="active">SALBP-1</p>
+                </div>
+
+                <div id="additionalData">
+                    <label for="limitPicker" id="limitPickerLabel">
+                        <p id="limitPickerDesc">Enter cycle time</p>
+                        <input type="number" id="limitPicker" value="15" min="1" required>
+                    </label>
+
+                    <hr>
+
+                    <div id="methodPickerWrapper">
+                        <p>Choose solution heuristic</p>
+                        <select name="methodPicker" id="methodPicker" required>
+
+                            <option value="WET">WET</option>
+                            <option value="RPW">RPW</option>
+                            <option value="NOF">NOF</option>
+                            <option value="NOIF">NOIF</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="buttons">
+                    <button id="copyBTN">Copy data</button>
+                    <button id="solveBTN">Solve problem</button>
+                </div>
+
+            </div>
+
+            <div id="sourceWrapperRight">
+                <h4>Problem data</h4>
+                <p>Choose a TXT file or enter data manually</p>
+                <textarea id="source" placeholder='1 1 "succs" [2, 3],&#10;2 1 "preds" [1]'
+                    spellcheck="false"></textarea>
+                <input type="file" id="filePicker" accept=".txt" required>
             </div>
         </form>
-        <div>
-            <button id="copyBTN">Copy data</button>
-            <button id="updateBTN">Update Graph</button>
-        </div>
+
     </div>
 
-    <main>
+    <main id="mainWrapper">
         <section id="visualizationMainWrapper">
             <div class="sectionTitle">
                 <h2>Precedence graph</h2>
@@ -156,8 +175,9 @@
             </div>
         </section>
 
-        <footer>© 2023 <span>Adam Geppert</span> Wszystkie prawa zastrzeżone. | Projekt i realizacja aplikacji w ramach
-            <span>Pracy Inżynierskiej</span></footer>
+        <footer>© <span id="copyrightYear">2023</span> <span class="copyrightMainInfo">Adam Geppert</span> Wszystkie
+            prawa zastrzeżone. | Projekt i realizacja aplikacji w ramach
+            <span class="copyrightMainInfo">Pracy Inżynierskiej</span></footer>
     </main>
 
     <script src="leader-line.min.js"></script>
