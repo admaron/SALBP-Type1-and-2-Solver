@@ -42,6 +42,7 @@ window.onload = () => {
     let solutionData = []; // Array of tasks (IDs) after prioritization
     let cyclesLineup = []; // Array of task (objects) placed in cycles
     let cyclesLineupTimes = [0]; //Array of space(time) used in each cycle
+    let optimalSolution = false;
     let currentDate = new Date;
 
 
@@ -150,7 +151,12 @@ window.onload = () => {
 
         sourceBTN.classList.remove("hide");
         sourceWRAP.classList.add("hide");
-        notificationUpdate('Solution found!', 1500);
+
+        if (optimalSolution) {
+            notificationUpdate('Optimal solution found!', 1500);
+        } else {
+            notificationUpdate('Suboptimal solution found!', 1500);
+        }
     })
 
 
@@ -646,26 +652,9 @@ window.onload = () => {
         if (typeSALBP == 1) {
             c = limitInput.value;
             SALBP1_lineupSolver(solutionData);
+            optimalSolution = true;
         } else if (typeSALBP == 2) {
-            const t_sum = Data.reduce((accumulator, object) => {
-                return accumulator + object.time;
-            }, 0);
-            const t_max = Math.max(...Data.map(object => {
-                return object.time;
-            }));
-
-            c = Math.max(Math.round(t_sum / limitInput.value), t_max);
-            SALBP1_lineupSolver(solutionData);
-
-            let loopTerminator = 0;
-            let UB = 10;
-            while ((cyclesLineup.length != limitInput.value) && loopTerminator < UB) {
-                cyclesLineup = [];
-                cyclesLineupTimes = [0];
-                c++;
-                loopTerminator++;
-                SALBP1_lineupSolver(solutionData);
-            }
+            SALBP2_search();
         }
 
         generateGanttCharts();
@@ -910,6 +899,72 @@ window.onload = () => {
             }
         }
 
+
+        //! SALBP2 search function
+        function SALBP2_search() {
+
+            // Lower bound calculation
+            const t_sum = Data.reduce((accumulator, object) => {
+                return accumulator + object.time;
+            }, 0);
+            const t_max = Math.max(...Data.map(object => {
+                return object.time;
+            }));
+
+            c = Math.max(Math.round(t_sum / limitInput.value), t_max);
+            console.log("LB " + c);
+
+
+            // Upper bound calculation
+            let UB = 0;
+            if (limitInput.value % 2 == 0) {
+                UB = Math.max(t_max, Math.round((2 * Data.reduce((accumulator, object) => {
+                    return accumulator + (object.time - 1);
+                }, 0)) / parseInt(limitInput.value)));
+            } else {
+                UB = Math.max(t_max, Math.round((2 * t_sum) / (parseInt(limitInput.value) + 1)));
+            }
+            console.log("UB " + UB);
+
+
+            //! Lower bound search method 
+            SALBP1_lineupSolver(solutionData);
+
+            // Optimal solution check
+            let allSolutions = [];
+            allSolutions.push([c, cyclesLineup.length]);
+            while (c < UB) {
+                if (cyclesLineup.length == limitInput.value) {
+                    optimalSolution = true;
+                    break;
+                } else {
+                    optimalSolution = false;
+                    c++;
+                    cyclesLineup = [];
+                    cyclesLineupTimes = [0];
+
+                    SALBP1_lineupSolver(solutionData);
+                    allSolutions.push([c, cyclesLineup.length]);
+                }
+            }
+
+
+            // Suboptimal solution handler
+            let suboptimalSolution = [0, 0];
+            allSolutions.forEach((e, n) => {
+                if (e[1] <= limitInput.value) {
+                    if (e[1] > suboptimalSolution[1]) {
+                        suboptimalSolution[0] = e[0];
+                        suboptimalSolution[1] = e[1];
+                    }
+                }
+            });
+
+            c = suboptimalSolution[0];
+            cyclesLineup = [];
+            cyclesLineupTimes = [0];
+            SALBP1_lineupSolver(solutionData);
+        }
 
         //! Gantt charts generating function
         function generateGanttCharts() {
