@@ -284,6 +284,7 @@ aside {
                     }
 
                     input[type=number] {
+                        appearance: textfield;
                         -moz-appearance: textfield;
                     }
                 }
@@ -438,7 +439,6 @@ main {
     #visualizationMainWrapper {
         width: 100%;
         height: fit-content;
-        max-height: 100vh;
         display: flex;
         flex-wrap: wrap;
         padding: 50px 50px 25px 50px;
@@ -448,7 +448,7 @@ main {
         #visualizationWrapper {
             flex-basis: 100%;
             height: fit-content;
-            max-height: 100vh;
+            max-width: 100%;
             display: flex;
             justify-content: center;
             pointer-events: none;
@@ -640,24 +640,161 @@ main {
     background-color: #989898;
 }
 
-@media (max-width: 1025px) {
-    #visualizationWrapper {
-        transform: rotate(90deg);
-        padding: 50px;
-        height: 100vw;
+@media (min-width: 1921px) {
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
-        .nodesColumn {
-            padding: 0 50px;
-        }
-
-        .node {
-            transform: rotate(-90deg);
+        #visualizationMainWrapper,
+        #solutionWrapper {
+            max-width: 1350px !important;
         }
     }
+}
+
+@media (max-width: 1550px) {
+
+    body,
+    header {
+        max-width: 100vw;
+    }
+
+    #sourceWrapper {
+        max-width: 100vw;
+
+        form {
+            width: 70%;
+            max-width: 90%;
+        }
+    }
+
+    aside {
+        display: none;
+    }
+
+    main {
+        width: 100%;
+        max-width: 100vw;
+        left: 0;
+        padding: 50px;
+
+        #solutionWrapper {
+
+            #problemData {
+                flex-wrap: wrap;
+
+                #solutionType,
+                #solutionInfoHeuristic,
+                #solutionInfoC,
+                #solutionInfoK {
+                    flex-basis: 45%;
+                    flex-grow: 1;
+                }
+            }
+
+            #ganttCharts {
+                #ganttChartsWrapper {
+                    canvas {
+                        padding: 25px;
+                    }
+                }
+            }
+
+            #qualityIndicators {
+                flex-wrap: wrap;
+
+                #solutionInfoT,
+                #solutionInfoLE,
+                #solutionInfoSI {
+                    flex-basis: 45%;
+                    flex-grow: 1;
+                }
+            }
+        }
+    }
+
+
+
 
     #notification {
         position: fixed;
         bottom: auto;
         top: 90%;
+    }
+}
+
+@media (max-width: 1024px) {
+    #sourceWrapper {
+        max-width: 100vw;
+
+        form {
+            width: 90%;
+            max-width: 90%;
+        }
+    }
+
+    #visualizationMainWrapper {
+
+        #visualizationWrapper {
+            flex-direction: column;
+
+            .nodesColumn {
+                flex-direction: row;
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    #sourceWrapper {
+        overflow-y: scroll;
+        padding: 75px 25px;
+        align-items: flex-start;
+
+        form {
+            flex-direction: column-reverse;
+
+            #sourceWrapperRight {
+                textarea {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    main {
+        padding: 50px 15px;
+
+        #visualizationMainWrapper {
+            height: fit-content;
+            max-height: none;
+            padding: 50px 0 25px 0;
+
+            .sectionTitle {
+                margin: 0 25px;
+            }
+
+            #visualizationWrapper {
+                flex-direction: column;
+                padding: 50px 0 0 0;
+
+                .nodesColumn {
+                    flex-direction: row;
+                }
+            }
+        }
+
+        #solutionWrapper {
+            #ganttCharts {
+                padding: 50px 0 25px 0;
+
+                .sectionTitle {
+                    margin: 0 25px;
+                }
+            }
+        }
+
     }
 }

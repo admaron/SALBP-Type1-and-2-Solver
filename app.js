@@ -52,14 +52,16 @@ window.onload = () => {
 
     //! Window resize handler
     window.onresize = () => {
-        clearConnections();
+        setTimeout(() => {
+            clearConnections();
 
-        if (error) {
-            highlightLineUpdate(false, highlightCurrLine);
-        } else {
-            generateConnections();
-            console.clear();
-        }
+            if (error) {
+                highlightLineUpdate(false, highlightCurrLine);
+            } else {
+                generateConnections();
+                console.clear();
+            }
+        }, 300);
     };
 
 
