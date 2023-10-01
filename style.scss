@@ -364,21 +364,51 @@ aside {
             padding-top: 30px;
             border-radius: 10px;
 
-            h4 {
-                flex-basis: 100%;
-                font-size: 20px;
-                font-weight: 700;
-                letter-spacing: 1.4px;
-                margin: 0 30px;
+            div {
+                flex-basis: 85%;
+
+                h4 {
+                    flex-basis: 100%;
+                    font-size: 20px;
+                    font-weight: 700;
+                    letter-spacing: 1.4px;
+                    margin: 0 30px;
+                }
+
+                p {
+                    flex-basis: 100%;
+                    color: #323232;
+                    font-size: 14px;
+                    font-weight: 300;
+                    text-transform: uppercase;
+                    margin: 0 30px 25px 30px;
+                }
             }
 
-            p {
-                flex-basis: 100%;
-                color: #323232;
-                font-size: 14px;
-                font-weight: 300;
-                text-transform: uppercase;
-                margin: 0 30px 25px 30px;
+            figure {
+                flex-basis: 15%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0 10px 25px 0;
+
+                svg {
+                    cursor: pointer;
+                    transition: all 0.15s linear;
+
+                    path {
+                        transition: all 0.15s linear !important;
+                    }
+                }
+
+                svg:hover {
+                    fill: $main-color;
+
+                    path {
+                        fill: #fff;
+                        fill-opacity: 1;
+                    }
+                }
             }
 
             #filePicker {
@@ -397,6 +427,113 @@ aside {
                 resize: none;
                 border: none;
                 border-top: 1px solid #ddd;
+            }
+        }
+    }
+}
+
+#sourceAddInfoWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3568CC4D;
+
+    #sourceAddInfoContent {
+        width: 650px;
+        height: fit-content;
+        border-radius: 10px;
+        background: #FFF;
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        h4 {
+            flex-basis: 100%;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+            margin: 0 10px;
+        }
+
+        >p {
+            flex-basis: 100%;
+            color: #323232;
+            font-size: 14px;
+            font-weight: 300;
+            text-transform: uppercase;
+            padding: 0 10px 25px 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        svg {
+            margin: 30px auto;
+        }
+
+        .sourceAddInfoDesc {
+            display: flex;
+            justify-content: space-between;
+            padding: 7.5px 15px;
+
+            >p {
+                border: none;
+                flex-basis: fit-content;
+                font-size: 16px;
+                font-weight: 400;
+                min-width: 30px;
+            }
+
+            div {
+                flex-grow: 1;
+
+                h5 {
+                    font-size: 16px;
+                    font-weight: 800;
+                }
+
+                p {
+                    font-size: 14px;
+                    font-weight: 300;
+                    text-transform: uppercase;
+                    padding: 0;
+                }
+
+                .relationTypeDesc {
+                    font-size: 14px;
+                    font-weight: 600;
+                    text-transform: none;
+                    margin-top: 10px !important;
+                }
+
+                .relationTypeDesc:nth-of-type(1) {
+                    margin-top: 0 !important;
+                }
+
+                .descImportant {
+                    color: $main-color;
+                    text-transform: none;
+                    font-weight: 500;
+                }
+
+                .descImportant:nth-of-type(2),
+                .descImportant:nth-of-type(4) {
+                    margin-top: 10px !important;
+                }
+            }
+        }
+
+        .sourceAddInfoDesc:nth-of-type(3) {
+            div {
+                p:nth-of-type(5) {
+                    margin-top: 10px !important;
+                }
+
             }
         }
     }

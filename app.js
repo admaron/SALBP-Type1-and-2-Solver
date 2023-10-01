@@ -14,6 +14,8 @@ window.onload = () => {
     const sourceBTN = document.querySelector("#sourceBTN");
     const sourceWRAP = document.querySelector("#sourceWrapper");
     const sourceTXTAREA = document.querySelector("#source");
+    const sourceAddInfoBTN = document.querySelector("#sourceAddInfoBTN");
+    const sourceAddInfoWrapper = document.querySelector("#sourceAddInfoWrapper");
     const notificationELEM = document.querySelector("#notification");
     const highlight = document.querySelector("#highlight");
     const fileInput = document.querySelector("#filePicker");
@@ -152,6 +154,9 @@ window.onload = () => {
         BLMsolver();
 
         sourceBTN.classList.remove("hide");
+        sourceBTN.innerText = "Change data";
+        sourceBTN.style.opacity = 1;
+        sourceBTN.style.pointerEvents = "auto";
         sourceWRAP.classList.add("hide");
 
         if (optimalSolution) {
@@ -159,7 +164,7 @@ window.onload = () => {
         } else {
             notificationUpdate('Suboptimal solution found!', 1500);
         }
-    })
+    });
 
 
     //! Menu button handler
@@ -173,7 +178,21 @@ window.onload = () => {
                 sourceBTN.innerText = "Change data";
             }
         }
-    })
+    });
+
+
+    //! Program data additional information popup button handler
+    sourceAddInfoBTN.addEventListener("click", () => {
+        sourceAddInfoWrapper.classList.remove("hide");
+    });
+
+
+    //! Program data additional information popup handler
+    sourceAddInfoWrapper.addEventListener("click", (event) => {
+        if (event.target.id == "sourceAddInfoWrapper") {
+            sourceAddInfoWrapper.classList.add("hide");
+        }
+    });
 
 
     //! Notification handler
@@ -194,6 +213,11 @@ window.onload = () => {
         error = true;
         Data = [];
         nodesStorage = [-1];
+
+        if (!sourceBTN.classList.contains("hide")) {
+            sourceBTN.style.opacity = 0.5;
+            sourceBTN.style.pointerEvents = "none";
+        }
 
         clearConnections();
         clearVisualization();
@@ -1048,7 +1072,7 @@ window.onload = () => {
                         },
 
                         data: {
-                            labels: ["Cycle " + (i + 1) + " "],
+                            labels: ["Station " + (i + 1) + " "],
 
                             datasets: []
                         }

@@ -330,20 +330,44 @@ aside a:hover svg path {
   padding-top: 30px;
   border-radius: 10px;
 }
-#sourceWrapper form #sourceWrapperRight h4 {
+#sourceWrapper form #sourceWrapperRight div {
+  flex-basis: 85%;
+}
+#sourceWrapper form #sourceWrapperRight div h4 {
   flex-basis: 100%;
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 1.4px;
   margin: 0 30px;
 }
-#sourceWrapper form #sourceWrapperRight p {
+#sourceWrapper form #sourceWrapperRight div p {
   flex-basis: 100%;
   color: #323232;
   font-size: 14px;
   font-weight: 300;
   text-transform: uppercase;
   margin: 0 30px 25px 30px;
+}
+#sourceWrapper form #sourceWrapperRight figure {
+  flex-basis: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px 25px 0;
+}
+#sourceWrapper form #sourceWrapperRight figure svg {
+  cursor: pointer;
+  transition: all 0.15s linear;
+}
+#sourceWrapper form #sourceWrapperRight figure svg path {
+  transition: all 0.15s linear !important;
+}
+#sourceWrapper form #sourceWrapperRight figure svg:hover {
+  fill: #3568cc;
+}
+#sourceWrapper form #sourceWrapperRight figure svg:hover path {
+  fill: #fff;
+  fill-opacity: 1;
 }
 #sourceWrapper form #sourceWrapperRight #filePicker {
   flex-basis: 100%;
@@ -360,6 +384,95 @@ aside a:hover svg path {
   resize: none;
   border: none;
   border-top: 1px solid #ddd;
+}
+
+#sourceAddInfoWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(53, 104, 204, 0.3019607843);
+}
+#sourceAddInfoWrapper #sourceAddInfoContent {
+  width: 650px;
+  height: -moz-fit-content;
+  height: fit-content;
+  border-radius: 10px;
+  background: #FFF;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent h4 {
+  flex-basis: 100%;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  margin: 0 10px;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent > p {
+  flex-basis: 100%;
+  color: #323232;
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  padding: 0 10px 25px 10px;
+  border-bottom: 1px solid #ddd;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent svg {
+  margin: 30px auto;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent .sourceAddInfoDesc {
+  display: flex;
+  justify-content: space-between;
+  padding: 7.5px 15px;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent .sourceAddInfoDesc > p {
+  border: none;
+  flex-basis: fit-content;
+  font-size: 16px;
+  font-weight: 400;
+  min-width: 30px;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent .sourceAddInfoDesc div {
+  flex-grow: 1;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent .sourceAddInfoDesc div h5 {
+  font-size: 16px;
+  font-weight: 800;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent .sourceAddInfoDesc div p {
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  padding: 0;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent .sourceAddInfoDesc div .relationTypeDesc {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: none;
+  margin-top: 10px !important;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent .sourceAddInfoDesc div .relationTypeDesc:nth-of-type(1) {
+  margin-top: 0 !important;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent .sourceAddInfoDesc div .descImportant {
+  color: #3568cc;
+  text-transform: none;
+  font-weight: 500;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent .sourceAddInfoDesc div .descImportant:nth-of-type(2),
+#sourceAddInfoWrapper #sourceAddInfoContent .sourceAddInfoDesc div .descImportant:nth-of-type(4) {
+  margin-top: 10px !important;
+}
+#sourceAddInfoWrapper #sourceAddInfoContent .sourceAddInfoDesc:nth-of-type(3) div p:nth-of-type(5) {
+  margin-top: 10px !important;
 }
 
 :target {
