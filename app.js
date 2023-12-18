@@ -44,7 +44,6 @@ window.onload = () => {
     let solutionData = []; // Array of tasks (IDs) after prioritization
     let cyclesLineup = []; // Array of task (objects) placed in cycles
     let cyclesLineupTimes = [0]; //Array of space(time) used in each cycle
-    let optimalSolution = false;
     let currentDate = new Date;
 
 
@@ -145,8 +144,6 @@ window.onload = () => {
             throw new Error("Graph cannot be created correctly - Increase max number of algorithm iterations");
         }
 
-        appendNodeTime();
-
         ganttChartsWrapper.innerHTML = "";
         solutionData = [];
         cyclesLineup = [];
@@ -159,11 +156,7 @@ window.onload = () => {
         sourceBTN.style.pointerEvents = "auto";
         sourceWRAP.classList.add("hide");
 
-        if (optimalSolution) {
-            notificationUpdate('Optimal solution found!', 1500);
-        } else {
-            notificationUpdate('Suboptimal solution found!', 1500);
-        }
+        notificationUpdate('Solution found!', 1500);
     });
 
 
@@ -289,6 +282,7 @@ window.onload = () => {
         }
         solutionInforTaskAmount.innerText = "Tasks amount: " + sourceData.length;
 
+
         //! Data validation function
         function validateSourceData(data, i, dataLength) {
 
@@ -407,7 +401,7 @@ window.onload = () => {
         let lastColumn = 0;
         let body = document.querySelector("#visualizationWrapper");
 
-        for (let i = 0; i < Data.length * 2; i++) {
+        for (let i = 0; i < Data.length; i++) {
             body.innerHTML += '<div class="nodesColumn"></div>';
         }
 
@@ -418,7 +412,7 @@ window.onload = () => {
         for (let d = 1; d < Data.length; d++) {
             let nodeExists = [-1]; // Array of column numbers of existing nodes in the format: [ID, SUCCS/PREDS ID]
 
-            // Check if node with ID exists in HTML
+            // Check if node for current task exists in HTML
             if (findNode(Data[d].ID) != -1) {
                 nodeExists[0] = findNode(Data[d].ID);
             }
@@ -432,6 +426,7 @@ window.onload = () => {
                 }
             }
 
+            // If node and all of its succs/preds don't exist in HTML add them and move to the next iteration
             if (nodeExists.every((val) => val === -1)) {
                 defaultNodeAppend(Data[d], lastColumn);
                 continue;
@@ -461,6 +456,7 @@ window.onload = () => {
         }
 
         updateNodesStorage();
+        appendNodeTime();
 
 
         //! Function to check if node exists in HTML structure and return its column number
@@ -524,6 +520,21 @@ window.onload = () => {
 
                 for (let n = 0; n < columnNodeElements.length; n++) {
                     nodesStorage[parseInt(columnNodeElements[n].innerText)] = columnNodeElements[n];
+                }
+            }
+        }
+
+
+        //! Task time input function
+        function appendNodeTime() {
+            let nodesColumns = document.querySelectorAll(".nodesColumn");
+
+            for (let j = 0; j < nodesColumns.length; j++) {
+                let columnNodeElements = nodesColumns[j].querySelectorAll(".node span");
+                let columnNodeElementsTime = nodesColumns[j].querySelectorAll(".node .time");
+
+                for (let n = 0; n < columnNodeElements.length; n++) {
+                    columnNodeElementsTime[n].innerText += Data[parseInt(columnNodeElements[n].innerText) - 1].time;
                 }
             }
         }
@@ -621,21 +632,6 @@ window.onload = () => {
     }
 
 
-    //! Task time input function
-    function appendNodeTime() {
-        let nodesColumns = document.querySelectorAll(".nodesColumn");
-
-        for (let j = 0; j < nodesColumns.length; j++) {
-            let columnNodeElements = nodesColumns[j].querySelectorAll(".node span");
-            let columnNodeElementsTime = nodesColumns[j].querySelectorAll(".node .time");
-
-            for (let n = 0; n < columnNodeElements.length; n++) {
-                columnNodeElementsTime[n].innerText += Data[parseInt(columnNodeElements[n].innerText) - 1].time;
-            }
-        }
-    }
-
-
     //! BLM problem solver function
     function BLMsolver() {
         if (limitInput.value < 0 && typeSALBP == 1) {
@@ -658,6 +654,15 @@ window.onload = () => {
             throw new Error("Incorrect K value (null)");
         }
 
+        const t_max = Math.max(...Data.map(object => {
+            return object.time;
+        }));
+        if (limitInput.value < t_max && typeSALBP == 1) {
+            errorHandler();
+            notificationUpdate('Incorrect c value (lower than t_max)', 1500);
+            throw new Error("Incorrect c value (lower than t_max)");
+        }
+
         switch (methodInput.selectedIndex) {
             case 0:
                 WETsolver();
@@ -678,7 +683,6 @@ window.onload = () => {
         if (typeSALBP == 1) {
             c = limitInput.value;
             SALBP1_lineupSolver(solutionData);
-            optimalSolution = true;
         } else if (typeSALBP == 2) {
             SALBP2_search();
         }
@@ -938,7 +942,6 @@ window.onload = () => {
             }));
 
             c = Math.max(Math.round(t_sum / limitInput.value), t_max);
-            console.log("LB " + c);
 
 
             // Upper bound calculation
@@ -950,47 +953,48 @@ window.onload = () => {
             } else {
                 UB = Math.max(t_max, Math.round((2 * t_sum) / (parseInt(limitInput.value) + 1)));
             }
-            console.log("UB " + UB);
 
 
             //! Lower bound search method 
-            SALBP1_lineupSolver(solutionData);
-
-            // Optimal solution check
             let allSolutions = [];
-            allSolutions.push([c, cyclesLineup.length]);
-            while (c < UB) {
+            let solutionFound = false;
+            let feasibleSolution = [0, 0];
+
+            while (c <= UB) {
+                SALBP1_lineupSolver(solutionData);
+
                 if (cyclesLineup.length == limitInput.value) {
-                    optimalSolution = true;
+                    solutionFound = true;
+                    feasibleSolution[0] = c;
+                    feasibleSolution[1] = cyclesLineup.length;
                     break;
                 } else {
-                    optimalSolution = false;
+                    solutionFound = false;
+                    allSolutions.push([c, cyclesLineup.length]);
                     c++;
                     cyclesLineup = [];
                     cyclesLineupTimes = [0];
-
-                    SALBP1_lineupSolver(solutionData);
-                    allSolutions.push([c, cyclesLineup.length]);
                 }
             }
 
 
-            // Suboptimal solution handler
-            let suboptimalSolution = [0, 0];
-            allSolutions.forEach((e, n) => {
-                if (e[1] <= limitInput.value) {
-                    if (e[1] > suboptimalSolution[1]) {
-                        suboptimalSolution[0] = e[0];
-                        suboptimalSolution[1] = e[1];
+            if (!solutionFound) {
+                allSolutions.forEach((e) => {
+                    if (e[1] <= limitInput.value) {
+                        if (e[1] > feasibleSolution[1]) {
+                            feasibleSolution[0] = e[0];
+                            feasibleSolution[1] = e[1];
+                        }
                     }
-                }
-            });
+                });
+            }
 
-            c = suboptimalSolution[0];
+            c = feasibleSolution[0];
             cyclesLineup = [];
             cyclesLineupTimes = [0];
             SALBP1_lineupSolver(solutionData);
         }
+
 
         //! Gantt charts generating function
         function generateGanttCharts() {
